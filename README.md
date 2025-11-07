@@ -109,7 +109,6 @@ src/
 - Implemented using `@vueuse/core`'s `useIdle` composable
 - Automatically logs out users after **5 minutes of inactivity**
 - Activity detection includes mouse movements and keyboard events
-- **Visual Warning**: Shows countdown banner 30 seconds before logout
 - Alert notification when session expires
 
 ### Role-Based Access Control
