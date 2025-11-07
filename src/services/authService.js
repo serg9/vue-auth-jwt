@@ -1,101 +1,49 @@
-import { jwtDecode } from 'jwt-decode'
+import tokenService from './tokenService'
+import storageService from './storageService'
 
-const TOKEN_KEY = 'auth_token'
-const USER_KEY = 'auth_user'
-const TOKEN_EXPIRY_HOURS = 24
-
-const base64UrlEncode = (str) => btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
-
-const generateMockJWT = (payload) => {
-  const header = { alg: 'HS256', typ: 'JWT' }
-  const encodedHeader = base64UrlEncode(JSON.stringify(header))
-  const encodedPayload = base64UrlEncode(JSON.stringify(payload))
-  const signature = base64UrlEncode(`signature_${Date.now()}`)
-
-  return `${encodedHeader}.${encodedPayload}.${signature}`
+const MOCK_USERS = {
+  'admin@test.com': { password: 'admin123', role: 'admin' },
+  'user@test.com': { password: 'user123', role: 'user' },
 }
 
-const decodeJWT = (token) => {
-  try {
-    return jwtDecode(token)
-  } catch {
-    return null
-  }
+const validateCredentials = (email, password) => {
+  const user = MOCK_USERS[email]
+  return user?.password === password ? user.role : null
 }
 
-const isTokenExpired = (token) => {
-  try {
-    const { exp } = jwtDecode(token)
-    return !exp || exp <= Math.floor(Date.now() / 1000)
-  } catch {
-    return true
-  }
+const login = async (email, password) => {
+  await new Promise((resolve) => setTimeout(resolve, 500))
+
+  const role = validateCredentials(email, password)
+  if (!role) throw new Error('Invalid credentials')
+
+  const payload = tokenService.createPayload(email, role)
+  const token = tokenService.createMockToken(payload)
+  const user = { email, role }
+
+  storageService.saveAuth(token, user)
+
+  return { token, user }
 }
 
-const clearStorage = () => {
-  localStorage.removeItem(TOKEN_KEY)
-  localStorage.removeItem(USER_KEY)
-}
+const logout = () => storageService.clearAuth()
 
 const getToken = () => {
-  const token = localStorage.getItem(TOKEN_KEY)
+  const token = storageService.getToken()
 
-  if (token && isTokenExpired(token)) {
-    clearStorage()
+  if (token && tokenService.isExpired(token)) {
+    storageService.clearAuth()
     return null
   }
 
   return token
 }
 
-const getUser = () => {
-  const data = localStorage.getItem(USER_KEY)
-  return data ? JSON.parse(data) : null
-}
+const getUser = () => storageService.getUser()
 
-const TEST_USERS = {
-  'admin@test.com': { password: 'admin123', role: 'admin' },
-  'user@test.com': { password: 'user123', role: 'user' },
-}
+const decodeJWT = (token) => tokenService.decode(token)
 
-const getUserRole = (email, password) => {
-  const testUser = TEST_USERS[email]
-
-  if (testUser && testUser.password === password) {
-    return testUser.role
-  }
-
-  return email.includes('admin') ? 'admin' : 'user'
-}
-
-const login = async (email, password) => {
-  await new Promise((resolve) => setTimeout(resolve, 500))
-
-  if (!email || !password) {
-    throw new Error('Invalid credentials')
-  }
-
-  const role = getUserRole(email, password)
-  const now = Math.floor(Date.now() / 1000)
-
-  const payload = {
-    sub: email,
-    email,
-    role,
-    iat: now,
-    exp: now + TOKEN_EXPIRY_HOURS * 60 * 60,
-  }
-
-  const token = generateMockJWT(payload)
-  const user = { email, role }
-
-  localStorage.setItem(TOKEN_KEY, token)
-  localStorage.setItem(USER_KEY, JSON.stringify(user))
-
-  return { token, user }
-}
-
-const logout = () => clearStorage()
+const isTokenExpired = (token) => tokenService.isExpired(token)
 
 export default {
   login,
