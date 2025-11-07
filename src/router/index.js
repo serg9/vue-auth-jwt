@@ -4,31 +4,31 @@ import { useAuthStore } from '../store/auth'
 const routes = [
   {
     path: '/',
-    name: 'public',
-    component: () => import('../views/PublicView.vue')
+    name: 'home',
+    component: () => import('../views/HomeView.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/LoginView.vue')
+    component: () => import('../views/LoginView.vue'),
   },
   {
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('../views/DashboardView.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/admin',
     name: 'admin',
     component: () => import('../views/AdminView.vue'),
-    meta: { requiresAuth: true, requiresAdmin: true }
-  }
+    meta: { requiresAuth: true, requiresAdmin: true },
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 router.beforeEach((to) => {
@@ -49,5 +49,3 @@ router.beforeEach((to) => {
 })
 
 export default router
-
- 
