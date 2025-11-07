@@ -4,7 +4,7 @@
       <div class="nav-links">
         <router-link :to="{ name: 'home' }" class="nav-link"> Home </router-link>
         <router-link
-          v-if="auth.isAuthenticated"
+          v-if="isAuthenticated"
           :to="{ name: 'dashboard' }"
           class="nav-link"
         >
@@ -15,23 +15,18 @@
         </router-link>
       </div>
 
-      <router-link v-if="!auth.isAuthenticated" :to="{ name: 'login' }" class="login-btn">
+      <router-link v-if="!isAuthenticated" :to="{ name: 'login' }" class="login-btn">
         Login
       </router-link>
-      <button v-else @click="auth.logout" class="logout-btn">Logout</button>
+      <button v-else @click="logout" class="logout-btn">Logout</button>
     </nav>
   </header>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useAuthStore } from "../store/auth";
+import { useAuth } from "../composables/useAuth";
 
-const auth = useAuthStore();
-
-const isAdmin = computed(() => {
-  return auth.isAuthenticated && auth.user?.role === "admin";
-});
+const { isAuthenticated, isAdmin, logout } = useAuth();
 </script>
 
 <style scoped>

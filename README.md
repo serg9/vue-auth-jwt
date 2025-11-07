@@ -66,17 +66,34 @@ yarn dev
 
 ```
 src/
-├── components/        # Reusable Vue components
-│   └── AppHeader.vue  # Navigation header
-├── layouts/           # Layout components
-│   └── AppLayout.vue  # Main layout with auto-logout logic
-├── router/            # Vue Router configuration
-│   └── index.js       # Routes and navigation guards
-├── services/          # Business logic and API services
-│   └── authService.js # Authentication service
-├── store/             # Pinia state management
-│   └── auth.js        # Authentication store
-└── views/             # Page components
+├── components/           # Reusable Vue components
+│   ├── ui/              # Base UI components
+│   │   ├── BaseCard.vue
+│   │   ├── BaseButton.vue
+│   │   ├── BaseInput.vue
+│   │   ├── BaseBadge.vue
+│   │   ├── BaseAlert.vue
+│   │   └── InfoRow.vue
+│   ├── features/        # Feature-specific components
+│   │   ├── LoginForm.vue
+│   │   ├── DemoCredentials.vue
+│   │   ├── FeatureCard.vue
+│   │   └── ProfileCard.vue
+│   └── AppHeader.vue    # Navigation header
+├── composables/         # Reusable composition functions
+│   ├── useAuth.js       # Authentication composable
+│   └── useInactivityLogout.js  # Auto-logout logic
+├── layouts/             # Layout components
+│   └── AppLayout.vue    # Main layout wrapper
+├── router/              # Vue Router configuration
+│   └── index.js         # Routes and navigation guards
+├── services/            # Business logic and API services
+│   ├── authService.js   # Authentication service
+│   ├── tokenService.js  # JWT token handling
+│   └── storageService.js # localStorage wrapper
+├── store/               # Pinia state management
+│   └── auth.js          # Authentication store
+└── views/               # Page components
     ├── HomeView.vue       # Public home page
     ├── LoginView.vue      # Login page
     ├── DashboardView.vue  # Protected user dashboard

@@ -8,7 +8,7 @@
         </p>
         <div class="hero-actions">
           <router-link
-            v-if="!auth.isAuthenticated"
+            v-if="!isAuthenticated"
             :to="{ name: 'login' }"
             class="btn-primary"
           >
@@ -28,19 +28,22 @@
       </div>
 
       <div class="features-grid">
-        <div v-for="feature in features" :key="feature.title" class="feature-card">
-          <h3 class="feature-title">{{ feature.title }}</h3>
-          <p class="feature-description">{{ feature.description }}</p>
-        </div>
+        <FeatureCard
+          v-for="feature in features"
+          :key="feature.title"
+          :title="feature.title"
+          :description="feature.description"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useAuthStore } from "../store/auth";
+import { useAuth } from "../composables/useAuth";
+import FeatureCard from "../components/features/FeatureCard.vue";
 
-const auth = useAuthStore();
+const { isAuthenticated } = useAuth();
 
 const features = [
   {
@@ -115,23 +118,5 @@ const features = [
 
 .features-grid {
   @apply max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
-}
-
-.feature-card {
-  @apply bg-white border border-gray-200 rounded-lg p-6 shadow-sm
-         hover:shadow-md hover:border-gray-300
-         transition-all;
-}
-
-.feature-icon {
-  @apply text-4xl mb-4;
-}
-
-.feature-title {
-  @apply text-lg font-semibold text-gray-900 mb-2;
-}
-
-.feature-description {
-  @apply text-sm text-gray-600 leading-relaxed;
 }
 </style>
