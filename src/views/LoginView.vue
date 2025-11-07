@@ -11,13 +11,14 @@
 
         <DemoCredentials class="mb-6" />
 
-        <LoginForm @submit="handleLogin" />
+        <LoginForm :loading="loading" :error="error" @submit="handleLogin" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "../composables/useAuth";
 import LoginForm from "../components/features/LoginForm.vue";
@@ -25,10 +26,21 @@ import DemoCredentials from "../components/features/DemoCredentials.vue";
 
 const router = useRouter();
 const { login } = useAuth();
+const loading = ref(false);
+const error = ref("");
 
 async function handleLogin({ email, password }) {
-  await login(email, password);
-  router.push({ name: "dashboard" });
+  error.value = "";
+  loading.value = true;
+
+  try {
+    await login(email, password);
+    router.push({ name: "dashboard" });
+  } catch (err) {
+    error.value = "Invalid email or password";
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 

@@ -66,13 +66,12 @@ yarn dev
 
 ```
 src/
-├── components/           # Reusable Vue components
+├── components/          # Reusable Vue components
 │   ├── ui/              # Base UI components
 │   │   ├── BaseCard.vue
 │   │   ├── BaseButton.vue
 │   │   ├── BaseInput.vue
 │   │   ├── BaseBadge.vue
-│   │   ├── BaseAlert.vue
 │   │   └── InfoRow.vue
 │   ├── features/        # Feature-specific components
 │   │   ├── LoginForm.vue

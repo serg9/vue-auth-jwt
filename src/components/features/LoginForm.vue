@@ -2,25 +2,23 @@
   <form @submit.prevent="handleSubmit" class="space-y-5">
     <BaseInput
       id="email"
-      v-model="email"
+      v-model="formData.email"
       type="email"
       label="Email"
       placeholder="name@example.com"
       required
+      :disabled="loading"
     />
 
     <BaseInput
       id="password"
-      v-model="password"
+      v-model="formData.password"
       type="password"
       label="Password"
       placeholder="••••••••"
       required
+      :disabled="loading"
     />
-
-    <BaseAlert v-model="error" variant="error">
-      {{ error }}
-    </BaseAlert>
 
     <BaseButton
       type="submit"
@@ -31,41 +29,45 @@
     >
       Sign in
     </BaseButton>
+
+    <div v-if="error" class="error-message">
+      {{ error }}
+    </div>
   </form>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive } from "vue";
 import BaseInput from "../ui/BaseInput.vue";
 import BaseButton from "../ui/BaseButton.vue";
-import BaseAlert from "../ui/BaseAlert.vue";
+
+const props = defineProps({
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+  error: {
+    type: String,
+    default: "",
+  },
+});
 
 const emit = defineEmits(["submit"]);
 
-const email = ref("");
-const password = ref("");
-const error = ref("");
-const loading = ref(false);
-
-async function handleSubmit() {
-  error.value = "";
-  loading.value = true;
-  try {
-    await emit("submit", { email: email.value, password: password.value });
-  } catch (e) {
-    error.value = "Login failed";
-  } finally {
-    loading.value = false;
-  }
-}
-
-defineExpose({
-  setError: (message) => {
-    error.value = message;
-  },
-  setLoading: (value) => {
-    loading.value = value;
-  },
+const formData = reactive({
+  email: "",
+  password: "",
 });
+
+function handleSubmit() {
+  emit("submit", { email: formData.email, password: formData.password });
+}
 </script>
 
+<style scoped>
+@import "tailwindcss" reference;
+
+.error-message {
+  @apply text-sm text-red-600 text-center;
+}
+</style>
