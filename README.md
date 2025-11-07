@@ -48,7 +48,7 @@ yarn dev
 
 ## Demo Credentials
 
-### 🔐 Test Accounts (Recommended for Demo)
+### Test Accounts
 
 **Admin Account:**
 
@@ -61,19 +61,6 @@ yarn dev
 - **Email:** `user@test.com`
 - **Password:** `user123`
 - **Access:** Home, Dashboard only
-
-### 🎯 Quick Login (Any Email)
-
-You can also use any email/password combination:
-
-- Email containing "admin" → Admin role
-- Any other email → User role
-- Password can be anything
-
-**Examples:**
-
-- `admin@company.com` + any password → Admin
-- `john@example.com` + any password → User
 
 ## Application Structure
 

@@ -10,7 +10,7 @@
         </div>
 
         <div class="demo-credentials">
-          <div class="demo-title">🔐 Test Accounts</div>
+          <div class="demo-title">Demo Accounts</div>
           <div class="demo-accounts">
             <div class="demo-account">
               <span class="demo-label">Admin:</span>
