@@ -2,15 +2,11 @@
   <div class="content-wrapper">
     <div class="header-section">
       <h1 class="page-title">Admin Panel</h1>
-      <p class="page-subtitle">
-        Administrative dashboard - restricted to admin users only
-      </p>
     </div>
 
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">Admin Information</h2>
-        <p class="card-description">Your administrative privileges and account details</p>
       </div>
 
       <div class="card-content">

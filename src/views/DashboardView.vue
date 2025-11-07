@@ -2,13 +2,11 @@
   <div class="content-wrapper">
     <div class="header-section">
       <h1 class="page-title">Dashboard</h1>
-      <p class="page-subtitle">Welcome back to your dashboard</p>
     </div>
 
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">Profile Information</h2>
-        <p class="card-description">Your account details</p>
       </div>
 
       <div class="card-content">
@@ -52,10 +50,6 @@ const auth = useAuthStore();
   @apply text-3xl font-semibold text-gray-900 mb-2;
 }
 
-.page-subtitle {
-  @apply text-sm text-gray-600;
-}
-
 .card {
   @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
 }
@@ -66,10 +60,6 @@ const auth = useAuthStore();
 
 .card-title {
   @apply text-lg font-semibold text-gray-900 mb-1;
-}
-
-.card-description {
-  @apply text-sm text-gray-600;
 }
 
 .card-content {
