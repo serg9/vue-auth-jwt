@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia'
 import authService from '../services/authService'
+import router from '../router'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: authService.getToken(),
-    user: authService.getUser()
+    user: authService.getUser(),
   }),
   getters: {
-    isAuthenticated: (state) => Boolean(state.token)
+    isAuthenticated: (state) => Boolean(state.token),
   },
   actions: {
     async login(email, password) {
@@ -19,8 +20,7 @@ export const useAuthStore = defineStore('auth', {
       authService.logout()
       this.token = null
       this.user = null
-    }
-  }
+      router.push({ name: 'login' })
+    },
+  },
 })
-
-
