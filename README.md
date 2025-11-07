@@ -46,8 +46,6 @@ yarn dev
 
 4. Open your browser and navigate to `http://localhost:5173`
 
-> 💡 **Quick Access:** See [TEST_CREDENTIALS.md](TEST_CREDENTIALS.md) for copy-paste ready test accounts
-
 ## Demo Credentials
 
 ### 🔐 Test Accounts (Recommended for Demo)
@@ -81,7 +79,7 @@ You can also use any email/password combination:
 
 ```
 src/
-├── components/         # Reusable Vue components
+├── components/        # Reusable Vue components
 │   └── AppHeader.vue  # Navigation header
 ├── layouts/           # Layout components
 │   └── AppLayout.vue  # Main layout with auto-logout logic
